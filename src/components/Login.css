@@ -1,0 +1,85 @@
+.Logincontainer {
+  width: 400px;
+  margin: 100px auto;
+  padding: 30px;
+  border: 1px solid #fdfcfc;
+  border-radius: 10px;
+  text-align: center;
+  border: 1px solid black;
+  animation: slidein 1s forwards;
+}
+
+.Logincontainer .title {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.Logincontainer img{
+  border-radius: 50%;
+  border: 2px solid black;
+  margin-top: 10px;
+}
+
+.Logincontainer form {
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+.Logincontainer input {
+  width: 95%;
+  padding: 5px;
+  font-size: 16px;
+  border: 1px solid #131212;
+  border-radius: 5px;
+}
+
+.Logincontainer button {
+  padding: 10px;
+  font-size: 16px;
+  color: white;
+  background-color: #506edc;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  width: 98%;
+}
+.login-email input{
+  margin-top: 10px;
+
+}
+.login-password input{
+  margin-top: 10px;
+}
+.login-email{
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+.login-password{
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.login-error {
+  color: red;
+  margin: 10px;
+}
+.login-dont {
+  margin-top: 10px;
+}
+
+@keyframes slidein {
+  0% {
+    transform: translateX(100px);
+  }
+  100% {
+    transform: translateX(0px);
+  }
+}
