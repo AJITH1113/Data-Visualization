@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'; // Add this import
+import { createSlice } from "@reduxjs/toolkit"; // Add this import
 
 const initialState = {
   dataset: [], // Array to store all datasets
@@ -7,11 +7,11 @@ const initialState = {
 };
 
 const selectDatasetSlice = createSlice({
-  name: 'selectDataset',
+  name: "selectDataset",
   initialState,
   reducers: {
     loadDatasetFromLocalStorage(state) {
-      const datasets = JSON.parse(localStorage.getItem('datasets')) || [];
+      const datasets = JSON.parse(localStorage.getItem("datasets")) || [];
       state.dataset = datasets; // Update the datasets state
     },
 

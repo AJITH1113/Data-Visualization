@@ -1,15 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
-import { Outlet } from "react-router-dom";
+import { Outlet, NavLink, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const steps = ["Select Study", "Select Dataset", "Create Graph", "Widgets"];
 
 export default function HorizontalLinearAlternativeLabelStepper() {
-  // Access isStudyLoaded, isDatasetLoaded, and isGraphDataLoaded states from Redux
+  const location = useLocation();
+  const [activeStep, setActiveStep] = useState(0);
+
   const isStudyLoaded = useSelector((state) => state.studies.isStudyLoaded);
   const isDatasetLoaded = useSelector(
     (state) => state.selectdataset.isDatasetLoaded
@@ -18,17 +20,57 @@ export default function HorizontalLinearAlternativeLabelStepper() {
     (state) => state.createGraph.isGraphDataLoaded
   );
 
-  // Determine the active step based on the loading states
-  const activeStep = isStudyLoaded
-    ? isDatasetLoaded
-      ? isGraphDataLoaded
-        ? 3 // Move to the final step if the graph data is loaded
-        : 2 // Stay at step 2 if only the graph data is not loaded
-      : 1 // Stay at step 1 if the dataset is not loaded
-    : 0; // Start at step 0 if the study is not loaded
+  // Update the active step based on the current path
+  useEffect(() => {
+    if (location.pathname.includes("/studies/study")) {
+      setActiveStep(0);
+    } else if (location.pathname.includes("/studies/datasets")) {
+      setActiveStep(1);
+    } else if (location.pathname.includes("/studies/graph")) {
+      setActiveStep(2);
+    } else if (location.pathname.includes("/studies/widgets")) {
+      setActiveStep(3);
+    }
+  }, [location.pathname]);
 
   return (
     <div>
+      {/* Navigation bar */}
+      <Box sx={{ mb: 2 }}>
+        <NavLink
+          to="/dashboard/studies/study"
+          style={{ margin: "0 10px", textDecoration: "none", color: "blue" }}
+          activeStyle={{ fontWeight: "bold", color: "darkblue" }}
+        >
+          STD_ID
+        </NavLink>
+        {">"}
+        <NavLink
+          to="/dashboard/studies/datasets"
+          style={{ margin: "0 10px", textDecoration: "none", color: "blue" }}
+          activeStyle={{ fontWeight: "bold", color: "darkblue" }}
+        >
+          DATASET_ID
+        </NavLink>
+        {">"}
+        <NavLink
+          to="/dashboard/studies/graph"
+          style={{ margin: "0 10px", textDecoration: "none", color: "blue" }}
+          activeStyle={{ fontWeight: "bold", color: "darkblue" }}
+        >
+          GRAPH
+        </NavLink>
+        {">"}
+        <NavLink
+          to="/dashboard/studies/widgets"
+          style={{ margin: "0 10px", textDecoration: "none", color: "blue" }}
+          activeStyle={{ fontWeight: "bold", color: "darkblue" }}
+        >
+          WIDGETS
+        </NavLink>
+      </Box>
+
+      {/* Stepper */}
       <Box sx={{ width: "100%" }}>
         <Stepper activeStep={activeStep} alternativeLabel>
           {steps.map((label) => (
@@ -38,13 +80,6 @@ export default function HorizontalLinearAlternativeLabelStepper() {
           ))}
         </Stepper>
       </Box>
-
-      {/* Display loaded states below the Stepper */}
-      {/* <Box sx={{ mt: 2, textAlign: "center", fontWeight: "bold" }}>
-        <div>{`isStudyLoaded: ${isStudyLoaded}`}</div>
-        <div>{`isDatasetLoaded: ${isDatasetLoaded}`}</div>
-        <div>{`isGraphDataLoaded: ${isGraphDataLoaded}`}</div>
-      </Box> */}
 
       <Outlet />
     </div>
