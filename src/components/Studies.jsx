@@ -39,32 +39,48 @@ export default function HorizontalLinearAlternativeLabelStepper() {
       <Box sx={{ mb: 2 }}>
         <NavLink
           to="/dashboard/studies/study"
-          style={{ margin: "0 10px", textDecoration: "none", color: "blue" }}
-          activeStyle={{ fontWeight: "bold", color: "darkblue" }}
+          style={({ isActive }) => ({
+            margin: "0 10px",
+            textDecoration: "none",
+            color: isActive ? "darkblue" : "blue",
+            fontWeight: isActive ? "bold" : "normal",
+          })}
         >
           STD_ID
         </NavLink>
         {">"}
         <NavLink
           to="/dashboard/studies/datasets"
-          style={{ margin: "0 10px", textDecoration: "none", color: "blue" }}
-          activeStyle={{ fontWeight: "bold", color: "darkblue" }}
+          style={({ isActive }) => ({
+            margin: "0 10px",
+            textDecoration: "none",
+            color: isActive ? "darkblue" : "blue",
+            fontWeight: isActive ? "bold" : "normal",
+          })}
         >
           DATASET_ID
         </NavLink>
         {">"}
         <NavLink
           to="/dashboard/studies/graph"
-          style={{ margin: "0 10px", textDecoration: "none", color: "blue" }}
-          activeStyle={{ fontWeight: "bold", color: "darkblue" }}
+          style={({ isActive }) => ({
+            margin: "0 10px",
+            textDecoration: "none",
+            color: isActive ? "darkblue" : "blue",
+            fontWeight: isActive ? "bold" : "normal",
+          })}
         >
           GRAPH
         </NavLink>
         {">"}
         <NavLink
           to="/dashboard/studies/widgets"
-          style={{ margin: "0 10px", textDecoration: "none", color: "blue" }}
-          activeStyle={{ fontWeight: "bold", color: "darkblue" }}
+          style={({ isActive }) => ({
+            margin: "0 10px",
+            textDecoration: "none",
+            color: isActive ? "darkblue" : "blue",
+            fontWeight: isActive ? "bold" : "normal",
+          })}
         >
           WIDGETS
         </NavLink>
