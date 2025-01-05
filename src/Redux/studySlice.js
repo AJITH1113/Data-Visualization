@@ -17,7 +17,9 @@ const studySlice = createSlice({
         state.rows = storedStudies;
         state.isStudyLoaded = false;
       }
-      const storedSelectedStudy = JSON.parse(localStorage.getItem("selectedStudy"));
+      const storedSelectedStudy = JSON.parse(
+        localStorage.getItem("selectedStudy")
+      );
       if (storedSelectedStudy) {
         state.selectedStudy = storedSelectedStudy;
       }
@@ -28,7 +30,7 @@ const studySlice = createSlice({
     },
     editStudy: (state, action) => {
       const { studyId, updatedStudy } = action.payload;
-      const index = state.rows.findIndex(row => row.studyId === studyId);
+      const index = state.rows.findIndex((row) => row.studyId === studyId);
       if (index !== -1) {
         state.rows[index] = { ...state.rows[index], ...updatedStudy }; // Update study with all fields
         localStorage.setItem("studies", JSON.stringify(state.rows));
@@ -45,7 +47,10 @@ const studySlice = createSlice({
     addSelectedStudy: (state, action) => {
       state.selectedStudy = action.payload;
       state.stepperStudy = false; // Update stepperStudy to false when a study is selected
-      localStorage.setItem("selectedStudy", JSON.stringify(state.selectedStudy));
+      localStorage.setItem(
+        "selectedStudy",
+        JSON.stringify(state.selectedStudy)
+      );
       state.isStudyLoaded = true;
     },
     resetStepperStudy: (state) => {
@@ -54,5 +59,12 @@ const studySlice = createSlice({
   },
 });
 
-export const { addStudy, editStudy, deleteStudy, loadStudiesFromLocalStorage, addSelectedStudy, resetStepperStudy } = studySlice.actions;
+export const {
+  addStudy,
+  editStudy,
+  deleteStudy,
+  loadStudiesFromLocalStorage,
+  addSelectedStudy,
+  resetStepperStudy,
+} = studySlice.actions;
 export default studySlice.reducer;
