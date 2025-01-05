@@ -19,12 +19,15 @@ const Widgets = () => {
   const selectedStudy = useSelector((state) => state.studies.selectedStudy);
   const isStudyLoaded = useSelector((state) => state.studies.isStudyLoaded);
   const graphData = useSelector((state) => state.createGraph);
+  const datasets = useSelector((state) => state.selectdataset.selectedDataset);
+  console.log(graphData);
+  console.log(datasets);
 
   // Fetching the selected dataset from Redux or localStorage
-  const selectedDataset = useSelector((state) => state.dataset.selectedDataset);
-  const localSelectedDataset = JSON.parse(
-    localStorage.getItem("selectedDataset")
-  );
+  // const selectedDataset = useSelector((state) => state.dataset.selectedDataset);
+  // const localSelectedDataset = JSON.parse(
+  //   localStorage.getItem("selectedDataset")
+  // );
 
   const handleBack = () => {
     dispatch(setGraphDataLoaded(false));

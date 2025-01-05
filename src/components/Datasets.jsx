@@ -1,9 +1,9 @@
-// Datasets.jsx
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   loadDatasetFromLocalStorage,
   setSelectedDataset,
+  setDatasetLoaded,
 } from "../Redux/SelectDataset";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
@@ -19,43 +19,46 @@ import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import Grid from "@mui/material/Grid";
 import { useNavigate } from "react-router-dom";
-import { setDatasetLoaded } from "../Redux/SelectDataset";
 
 const Datasets = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const rows = useSelector((state) => state.dataset); // Access datasets from Redux
-  const [tempSelectedRow, setTempSelectedRow] = React.useState(null);
+  const [tempSelectedDatasetId, setTempSelectedDatasetId] =
+    React.useState(null);
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
 
   useEffect(() => {
-    dispatch(loadDatasetFromLocalStorage()); // Ensure datasets are loaded from localStorage on component mount
+    dispatch(loadDatasetFromLocalStorage()); // Load datasets from localStorage on mount
   }, [dispatch]);
 
-  const handleRadioChange = (event, index) => {
-    setTempSelectedRow(index + 1); // Set the selected dataset's serial number
+  const handleRadioChange = (event, datasetId) => {
+    setTempSelectedDatasetId(datasetId); // Update selected dataset ID
   };
 
   const handleSelectDataset = () => {
     const selectedDataset = rows.find(
-      (row, index) => index + 1 === tempSelectedRow
+      (row) => row.datasetId === tempSelectedDatasetId
     );
+
     if (selectedDataset) {
-      dispatch(setSelectedDataset(selectedDataset.id)); // Dispatch Redux action
-      localStorage.setItem("selectedDataset", JSON.stringify(selectedDataset)); // Store selected dataset in localStorage
+      // Dispatch selected dataset to Redux
+      dispatch(setSelectedDataset(selectedDataset));
+      // Save selected dataset to localStorage
+      localStorage.setItem("selectedDataset", JSON.stringify(selectedDataset));
       setOpenSnackbar(true); // Show success message
+      dispatch(setDatasetLoaded(true)); // Update loaded state
       navigate("/dashboard/studies/graph", {
         state: { selectedDataset },
         replace: true,
       });
-      dispatch(setDatasetLoaded(true));
     } else {
       alert("Please select a dataset.");
     }
   };
 
   const handleBack = () => {
-    navigate("/dashboard/studies/study"); // Navigate to the 'Study' component
+    navigate("/dashboard/studies/study"); // Navigate back to the 'Study' page
   };
 
   const handleCloseSnackbar = () => {
@@ -69,29 +72,28 @@ const Datasets = () => {
           <TableHead>
             <TableRow>
               <TableCell>Selection</TableCell>
-              {/* <TableCell>S.No</TableCell> */}
               <TableCell>Dataset ID</TableCell>
               <TableCell>Dataset Name</TableCell>
-              <TableCell>Dataset Descripiton</TableCell>
+              <TableCell>Dataset Description</TableCell>
               <TableCell>Type</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {rows.length > 0 ? (
-              rows.map((row, index) => (
-                <TableRow key={row.id}>
+              rows.map((row) => (
+                <TableRow key={row.datasetId}>
                   <TableCell>
                     <Radio
-                      checked={tempSelectedRow === index + 1}
-                      onChange={(event) => handleRadioChange(event, index)}
-                      value={index + 1}
+                      checked={tempSelectedDatasetId === row.datasetId}
+                      onChange={(event) =>
+                        handleRadioChange(event, row.datasetId)
+                      }
+                      value={row.datasetId}
                     />
                   </TableCell>
-                  {/* <TableCell>{index + 1}</TableCell> */}
                   <TableCell>{row.datasetId}</TableCell>
                   <TableCell>{row.datasetName}</TableCell>
                   <TableCell>{row.description}</TableCell>
-
                   <TableCell>{row.datasetType}</TableCell>
                 </TableRow>
               ))

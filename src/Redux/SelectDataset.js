@@ -1,8 +1,8 @@
-import { createSlice } from "@reduxjs/toolkit"; // Add this import
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   dataset: [], // Array to store all datasets
-  selectedDataset: null, // Store the selected dataset
+  selectedDataset: null, // Store the selected dataset details
   isDatasetLoaded: false, // Tracks if a dataset has been loaded
 };
 
@@ -12,19 +12,19 @@ const selectDatasetSlice = createSlice({
   reducers: {
     loadDatasetFromLocalStorage(state) {
       const datasets = JSON.parse(localStorage.getItem("datasets")) || [];
-      state.dataset = datasets; // Update the datasets state
+      state.dataset = datasets; // Load datasets from localStorage
     },
 
     setSelectedDataset(state, action) {
-      state.selectedDataset = action.payload; // Set the selected dataset
+      state.selectedDataset = action.payload; // Update selected dataset details
     },
 
     setDatasets(state, action) {
-      state.dataset = action.payload; // Set datasets in the state
+      state.dataset = action.payload; // Update datasets array
     },
 
     setDatasetLoaded(state, action) {
-      state.isDatasetLoaded = action.payload; // Update the isDatasetLoaded state
+      state.isDatasetLoaded = action.payload; // Update isDatasetLoaded
     },
   },
 });
