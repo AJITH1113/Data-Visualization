@@ -11,6 +11,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import "./widgets.css";
 import { setGraphDataLoaded } from "../Redux/CreateGraph";
+import TumorSizeGraph from "../charts/TumorSizeGraph";
 
 const Widgets = () => {
   const dispatch = useDispatch();
@@ -41,8 +42,9 @@ const Widgets = () => {
       <Typography variant="h4" gutterBottom>
         Widgets
       </Typography>
+      <TumorSizeGraph />
 
-      <Card>
+      {/* <Card>
         <CardContent>
           <Typography variant="h6" gutterBottom>
             Selected Study
@@ -82,7 +84,7 @@ const Widgets = () => {
         >
           Back
         </Button>
-      </Box>
+      </Box> */}
     </div>
   );
 };
